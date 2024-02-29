@@ -316,6 +316,33 @@ elif [ "$JDKVER" == "15" ]; then
   HOTSPOT_ABI=arm-sflt
   JNI_PATH_FLAGS="--with-jni-libpath=/usr/lib/$DEB_HOST_MULTIARCH/jni:/lib/$DEB_HOST_MULTIARCH:/usr/lib/$DEB_HOST_MULTIARCH:/usr/lib/jni:/lib:/usr/lib"
 
+# OpenJDK 17
+elif [ "$JDKVER" == "17" ]; then
+  VERSION_POLICY="latest_general_availability"
+  JAVA_REPO="https://github.com/adoptium/jdk17u.git"
+  JAVA_SCM="git"
+  PATCHVER="jdk17"
+  AUTOGEN_STYLE="v2"
+  if [ "$BUILDER_TYPE" = "native" ]; then
+    HOSTJDK="$BUILDDIR/jdk-ev3"
+    HOSTJDK_RENAME_FROM="$BUILDDIR/jdk"
+    HOSTJDK_FILE="$BUILDDIR/jdk-ev3.tar.gz"
+    # stretch and buster have different versions
+    if [ "$BUILDER_DISTRO" = "stretch" ]; then
+      HOSTJDK_URL="https://ci.adoptium.net/job/eljbuild/job/stretch-bleeding/85/artifact/build/jdk-ev3.tar.gz"
+    else
+      HOSTJDK_URL="https://ci.adoptium.net/job/eljbuild/job/buster-bleeding/84/artifact/build/jdk-ev3.tar.gz"
+    fi
+  else
+    # same for both stretch & buster
+    HOSTJDK="$BUILDDIR/jdk-17.0.10+7"
+    HOSTJDK_FILE="$BUILDDIR/OpenJDK17U-jdk_x64_linux_hotspot_17.0.10_7.tar.gz"
+    HOSTJDK_URL="https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.10%2B7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.10_7.tar.gz"
+  fi
+  IMAGEDIR="$JDKDIR/build/linux-arm-${JDKVM}-${HOTSPOT_DEBUG}/images"
+  HOTSPOT_ABI=arm-sflt
+  JNI_PATH_FLAGS="--with-jni-libpath=/usr/lib/$DEB_HOST_MULTIARCH/jni:/lib/$DEB_HOST_MULTIARCH:/usr/lib/$DEB_HOST_MULTIARCH:/usr/lib/jni:/lib:/usr/lib"
+
 # OpenJDK Loom & Master+dev
 elif [ "$JDKVER" == "loom" ] || [ "$JDKVER" == "tip" ]; then
   if [ "$JDKVER" == "loom" ]; then
