@@ -7,7 +7,7 @@ ARG ARCH
 # this is a customized version of ev3dev-stretch-cross image
 
 # setup repositories and install required packages
-COPY sources.list.$DEBIAN_RELEASE /etc/apt/sources.list
+#COPY sources.list.$DEBIAN_RELEASE /etc/apt/sources.list
 COPY ev3dev-archive-keyring.gpg /etc/apt/trusted.gpg.d/
 RUN dpkg --add-architecture $ARCH && \
     apt-get update && \
