@@ -1,4 +1,4 @@
-ARG DEBIAN_RELEASE=stretch
+ARG DEBIAN_RELEASE=buster
 ARG BUILD_TYPE=cross
 
 FROM ev3dev-lang-java:jdk-$BUILD_TYPE-$DEBIAN_RELEASE
